@@ -3,359 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para El Amor De Mi Vida ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Para Mi Compañera de Aventuras</title>
+    <!-- Importación de fuentes elegantes de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    
     <style>
+        /* === RESET & CONFIGURACIÓN BASE === */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            background: linear-gradient(135deg, #090514 0%, #170a2c 50%, #0a1128 100%);
-            color: #ffffff;
-            font-family: 'Poppins', sans-serif;
-            min-height: 100vh;
-            overflow-x: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        /* Estrellas y destellos flotantes */
-        .stars-container {
-            position: fixed;
-            top: 0;
-            left: 0;
+        body, html {
             width: 100%;
             height: 100%;
-            pointer-events: none;
+            overflow: hidden; /* Evita el scroll para una experiencia inmersiva */
+            background-color: #0a0a0a;
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* === FONDO INMERSIVO (BOSQUE FLORAL/JARDÍN) === */
+        .background-garden {
+            position: absolute;
+            top: -5%; 
+            left: -5%;
+            width: 110%;
+            height: 110%;
+            /* Imagen de un jardín lleno de flores secundarias */
+            background-image: url('https://images.unsplash.com/photo-1490750967868-88aa4486c946?q=80&w=2071&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            /* Efecto Bokeh / Profundidad de campo */
+            filter: blur(12px) brightness(0.4) saturate(1.2);
             z-index: 1;
         }
 
-        .star {
+        /* === FLORES EN PRIMER PLANO === */
+        .foreground-flower {
             position: absolute;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle var(--duration) infinite ease-in-out;
+            bottom: -50px;
+            z-index: 3;
+            width: 40vmin;
+            height: 40vmin;
+            background-size: cover;
+            background-position: center;
+            /* Enmascaramiento radial para fundir la imagen cuadrada con el entorno */
+            -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%);
+            mask-image: radial-gradient(circle, rgba(0,0,0,1) 40%, rgba(0,0,0,0) 70%);
+            animation: breathe 6s ease-in-out infinite alternate;
         }
 
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.3); }
+        /* Rosa a la izquierda */
+        .flower-left {
+            left: -5%;
+            background-image: url('https://images.unsplash.com/photo-1562690868-60bbe7293e94?q=80&w=1000&auto=format&fit=crop');
+            transform-origin: bottom left;
+        }
+
+        /* Lirio a la derecha */
+        .flower-right {
+            right: -5%;
+            background-image: url('https://images.unsplash.com/photo-1508610048659-a06b669e3321?q=80&w=1000&auto=format&fit=crop');
+            transform-origin: bottom right;
+            animation-delay: 1s; /* Desfase para que no se muevan exactamente igual */
+        }
+
+        /* Efecto de respiración/viento */
+        @keyframes breathe {
+            0% { transform: rotate(-2deg) scale(1); }
+            100% { transform: rotate(2deg) scale(1.05); }
+        }
+
+        /* === EFECTO DE PARTÍCULAS (PÉTALOS) === */
+        .petals-container {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 2;
+            pointer-events: none; /* Permite interactuar con la tarjeta a través de los pétalos */
         }
 
         .petal {
             position: absolute;
-            background: radial-gradient(circle, #f472b6 0%, #db2777 100%);
+            top: -10%;
+            /* Diseño fotorrealista de un pétalo usando CSS avanzado */
+            background: radial-gradient(circle at top left, #ff4d6d, #ffb3c6);
             border-radius: 15px 0 15px 0;
-            opacity: 0.7;
-            pointer-events: none;
-            z-index: 2;
-            animation: fall var(--fall-duration) linear infinite;
+            box-shadow: inset 2px 2px 5px rgba(255,255,255,0.4), 0 2px 4px rgba(0,0,0,0.3);
+            opacity: 0.8;
+            animation: fall linear infinite, swirl ease-in-out infinite alternate;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-10vh) rotate(0deg); opacity: 0.8; }
-            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
+            0% { top: -10%; }
+            100% { top: 110%; }
+        }
+        @keyframes swirl {
+            0% { transform: translateX(0) rotate(0deg); }
+            100% { transform: translateX(50px) rotate(360deg); }
         }
 
-        /* Pantalla de inicio con Sobre / Regalo */
-        #welcome-screen {
-            position: fixed;
-            inset: 0;
-            background: rgba(9, 5, 20, 0.95);
-            backdrop-filter: blur(15px);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            transition: opacity 1.2s ease, visibility 1.2s;
-            cursor: pointer;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .envelope-icon {
-            font-size: 80px;
-            animation: pulse 1.8s infinite;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.6));
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.12); }
-        }
-
-        .welcome-title {
-            font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
-            color: #f472b6;
-            margin-bottom: 10px;
-            text-shadow: 0 0 15px rgba(244, 114, 182, 0.4);
-        }
-
-        .welcome-sub {
-            font-size: 1.1rem;
-            color: #cbd5e1;
-            letter-spacing: 1px;
-        }
-
-        /* Contenedor Principal */
-        .card-wrapper {
+        /* === CONTENEDOR GLASSMORPHISM (LA DEDICATORIA) === */
+        .glass-container {
             position: relative;
             z-index: 10;
             width: 90%;
             max-width: 650px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(20px);
-            border-radius: 28px;
-            padding: 40px 25px 30px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6),
-                        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            margin: 0 auto;
+            top: 50%;
+            transform: translateY(-50%);
+            
+            /* Glassmorphism Effect */
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            
+            padding: 40px;
             text-align: center;
-            margin: 20px auto;
+            color: #ffffff;
+            animation: float 8s ease-in-out infinite;
         }
 
-        /* Jardín de flores SVG */
-        .garden-bed {
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            gap: 8px;
-            height: 240px;
-            margin-bottom: 30px;
-            position: relative;
-            overflow: visible;
+        /* Animación flotante suave para la tarjeta */
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) translateY(0); }
+            50% { transform: translateY(-50%) translateY(-10px); }
         }
 
-        .flower-item {
-            opacity: 0;
-            transform: scale(0.3) translateY(80px);
-            transition: all 1.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        /* === TIPOGRAFÍA === */
+        .glass-container h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.5rem;
+            color: #ffd6e0;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
         }
 
-        .flower-item.bloomed {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        /* Texto y Poema */
-        .message-box {
-            min-height: 160px;
+        .glass-container p {
             font-size: 1.15rem;
             line-height: 1.8;
-            color: #f1f5f9;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8);
+            font-weight: 400;
         }
 
-        .line-regular { color: #e2e8f0; }
-        .line-lily { color: #f472b6; font-weight: 600; font-family: 'Dancing Script', cursive; font-size: 1.8rem; }
-        .line-rose { color: #f87171; font-weight: 600; font-family: 'Dancing Script', cursive; font-size: 1.8rem; }
-        .line-gold { color: #fbbf24; font-weight: 700; font-size: 1.3rem; display: block; margin-top: 15px; }
-
-        footer {
-            margin-top: 25px;
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.4);
-            letter-spacing: 1px;
+        .glass-container p i {
+            font-style: italic;
+            color: #ffb3c6;
         }
 
-        /* Mariposa Animada */
-        .butterfly {
-            position: absolute;
-            width: 25px;
-            height: 25px;
-            top: 20%;
-            left: 15%;
-            z-index: 15;
-            animation: fly 8s infinite ease-in-out;
-            pointer-events: none;
+        .signature {
+            margin-top: 30px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
+            color: #ffd6e0;
         }
 
-        @keyframes fly {
-            0% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(120px, -40px) rotate(15deg); }
-            50% { transform: translate(240px, 10px) rotate(-10deg); }
-            75% { transform: translate(100px, 50px) rotate(20deg); }
-            100% { transform: translate(0, 0) rotate(0deg); }
+        /* === DISEÑO RESPONSIVE === */
+        @media (max-width: 768px) {
+            .glass-container {
+                padding: 30px 20px;
+            }
+            .glass-container h1 {
+                font-size: 2.8rem;
+            }
+            .glass-container p {
+                font-size: 1rem;
+            }
+            .foreground-flower {
+                width: 50vmin;
+                height: 50vmin;
+            }
         }
     </style>
 </head>
 <body>
 
-<!-- Fondo Estrellado -->
-<div class="stars-container" id="stars"></div>
+    <!-- Fondo desenfocado -->
+    <div class="background-garden"></div>
 
-<!-- Pantalla de bienvenida -->
-<div id="welcome-screen" onclick="startExperience()">
-    <div class="envelope-icon">💌</div>
-    <div class="welcome-title">Un regalo especial para ti</div>
-    <div class="welcome-sub">(Toca aquí para abrir la sorpresa)</div>
-</div>
+    <!-- Contenedor para las partículas (Pétalos cayendo) -->
+    <div class="petals-container" id="petals"></div>
 
-<!-- Contenedor Principal -->
-<div class="card-wrapper">
-    
-    <!-- Mariposa flotante -->
-    <svg class="butterfly" viewBox="0 0 50 50">
-        <path d="M25 25 C10 0, 0 20, 20 25 C0 30, 10 50, 25 25 Z" fill="#ec4899" opacity="0.8"/>
-        <path d="M25 25 C40 0, 50 20, 30 25 C50 30, 40 50, 25 25 Z" fill="#f472b6" opacity="0.8"/>
-    </svg>
+    <!-- Flores fotorrealistas en primer plano -->
+    <div class="foreground-flower flower-left"></div>
+    <div class="foreground-flower flower-right"></div>
 
-    <!-- Campo de Flores Variadas (Lirios, Rosas, Tulipanes, Lavanda) -->
-    <div class="garden-bed">
+    <!-- Tarjeta de Cristal (Dedicatoria) -->
+    <div class="glass-container">
+        <h1>Para Mi Compañera de Aventuras</h1>
         
-        <!-- Lavanda / Flor silvestre -->
-        <div class="flower-item" id="f1">
-            <svg width="40" height="180" viewBox="0 0 40 180">
-                <path d="M20 180 L20 60" stroke="#15803d" stroke-width="3"/>
-                <circle cx="20" cy="50" r="6" fill="#a855f7"/>
-                <circle cx="15" cy="65" r="5" fill="#c084fc"/>
-                <circle cx="25" cy="75" r="5" fill="#a855f7"/>
-                <circle cx="18" cy="90" r="5" fill="#c084fc"/>
-            </svg>
-        </div>
-
-        <!-- Lirio Blanco-Rosado -->
-        <div class="flower-item" id="f2">
-            <svg width="80" height="210" viewBox="0 0 80 210">
-                <path d="M40 210 Q 35 120 40 70" stroke="#16a34a" stroke-width="4" fill="none"/>
-                <path d="M40 140 Q 15 130 10 110 Q 25 110 40 130" fill="#22c55e"/>
-                <!-- Pétalos Lirio -->
-                <path d="M40 70 C 20 40 0 40 15 20 C 30 35 38 50 40 70 Z" fill="#ec4899"/>
-                <path d="M40 70 C 60 40 80 40 65 20 C 50 35 42 50 40 70 Z" fill="#f472b6"/>
-                <path d="M40 70 C 25 30 30 5 40 0 C 50 5 55 30 40 70 Z" fill="#fbcfe8"/>
-                <!-- Estambres -->
-                <circle cx="40" cy="35" r="3" fill="#facc15"/>
-                <line x1="40" y1="70" x2="40" y2="35" stroke="#facc15" stroke-width="1.5"/>
-            </svg>
-        </div>
-
-        <!-- Gran Rosa Roja (Centro) -->
-        <div class="flower-item" id="f3">
-            <svg width="100" height="230" viewBox="0 0 100 230">
-                <path d="M50 230 Q 55 130 50 65" stroke="#15803d" stroke-width="5" fill="none"/>
-                <path d="M50 160 Q 80 150 85 130 Q 65 130 50 160" fill="#16a34a"/>
-                <path d="M50 180 Q 20 170 15 150 Q 35 150 50 180" fill="#15803d"/>
-                <!-- Capullos Rosa -->
-                <ellipse cx="50" cy="45" rx="32" ry="28" fill="#991b1b"/>
-                <path d="M30 35 C 30 10 70 10 70 35 C 60 55 40 55 30 35 Z" fill="#dc2626"/>
-                <path d="M38 30 C 38 18 62 18 62 30 C 56 42 44 42 38 30 Z" fill="#ef4444"/>
-                <path d="M44 26 C 44 20 56 20 56 26 Z" fill="#f87171"/>
-            </svg>
-        </div>
-
-        <!-- Lirio Púrpura Imperial -->
-        <div class="flower-item" id="f4">
-            <svg width="80" height="210" viewBox="0 0 80 210">
-                <path d="M40 210 Q 45 120 40 70" stroke="#16a34a" stroke-width="4" fill="none"/>
-                <path d="M40 130 Q 65 120 70 100 Q 55 100 40 120" fill="#22c55e"/>
-                <!-- Pétalos -->
-                <path d="M40 70 C 20 40 0 40 15 20 C 30 35 38 50 40 70 Z" fill="#7e22ce"/>
-                <path d="M40 70 C 60 40 80 40 65 20 C 50 35 42 50 40 70 Z" fill="#9333ea"/>
-                <path d="M40 70 C 25 30 30 5 40 0 C 50 5 55 30 40 70 Z" fill="#c084fc"/>
-                <circle cx="40" cy="35" r="3" fill="#facc15"/>
-            </svg>
-        </div>
-
-        <!-- Tulipán Dorado/Amarillo -->
-        <div class="flower-item" id="f5">
-            <svg width="50" height="190" viewBox="0 0 50 190">
-                <path d="M25 190 Q 20 110 25 70" stroke="#15803d" stroke-width="3.5" fill="none"/>
-                <path d="M25 70 C 10 50 5 25 25 15 C 45 25 40 50 25 70 Z" fill="#eab308"/>
-                <path d="M25 70 C 15 50 18 30 25 20 C 32 30 35 50 25 70 Z" fill="#facc15"/>
-            </svg>
-        </div>
-
+        <p>Quería regalarte algo tan único como lo que tenemos. Cada momento a tu lado es invaluable, desde nuestras escapadas al cine y las tardes en el parque, hasta la profunda paz de simplemente estar juntos en casa.</p>
+        
+        <p>Amo la conexión que hemos construido: un amor genuino, maduro y libre. Me encanta la forma en que nos complementamos y crecemos juntos; eligiéndonos cada día, sin ataduras ni dependencias, solo queriéndonos <i>de verdad</i>.</p>
+        
+        <p>Gracias por hacer de lo ordinario algo extraordinario y por ser mi lugar favorito en el mundo.</p>
+        
+        <div class="signature">Te amo profundamente</div>
     </div>
 
-    <!-- Caja de Texto Animada -->
-    <div class="message-box" id="message-container"></div>
+    <!-- Lógica JavaScript para las animaciones y partículas -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const petalsContainer = document.getElementById('petals');
+            const petalCount = 45; // Cantidad de pétalos en pantalla
 
-    <footer>Con todo mi amor, para la persona más hermosa ❤️</footer>
-</div>
-
-<!-- Música de fondo suave opcional -->
-<audio id="bg-music" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=sweet-love-111663.mp3"></audio>
-
-<script>
-    // Generar Estrellas
-    const starsContainer = document.getElementById('stars');
-    for (let i = 0; i < 60; i++) {
-        const star = document.createElement('div');
-        star.className = 'star';
-        star.style.width = `${Math.random() * 3 + 1}px`;
-        star.style.height = star.style.width;
-        star.style.top = `${Math.random() * 100}%`;
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.setProperty('--duration', `${Math.random() * 3 + 2}s`);
-        starsContainer.appendChild(star);
-    }
-
-    // Generar Pétalos cayendo
-    for (let i = 0; i < 15; i++) {
-        const petal = document.createElement('div');
-        petal.className = 'petal';
-        petal.style.width = `${Math.random() * 12 + 8}px`;
-        petal.style.height = `${Math.random() * 16 + 10}px`;
-        petal.style.left = `${Math.random() * 100}%`;
-        petal.style.setProperty('--fall-duration', `${Math.random() * 6 + 6}s`);
-        petal.style.animationDelay = `${Math.random() * 5}s`;
-        document.body.appendChild(petal);
-    }
-
-    // Textos del mensaje
-    const lines = [
-        { text: "Para la persona que ilumina cada uno de mis días...", class: "line-regular" },
-        { text: "Lirios por tu elegancia y pureza,", class: "line-lily" },
-        { text: "y rosas por la pasión y el amor tan infinito que siento por ti.", class: "line-rose" },
-        { text: "¡Gracias por hacer mi mundo un lugar mil veces más hermoso!", class: "line-gold" }
-    ];
-
-    function startExperience() {
-        // Ocultar pantalla de bienvenida
-        const welcome = document.getElementById('welcome-screen');
-        welcome.style.opacity = '0';
-        welcome.style.visibility = 'hidden';
-
-        // Reproducir música suave
-        const audio = document.getElementById('bg-music');
-        audio.volume = 0.4;
-        audio.play().catch(() => {});
-
-        // Florecer flores en secuencia
-        const flowers = ['f3', 'f2', 'f4', 'f1', 'f5'];
-        flowers.forEach((id, index) => {
-            setTimeout(() => {
-                document.getElementById(id).classList.add('bloomed');
-            }, index * 350 + 400);
-        });
-
-        // Mostrar texto letra por letra
-        setTimeout(typeWriter, 2200);
-    }
-
-    async function typeWriter() {
-        const container = document.getElementById('message-container');
-        for (let i = 0; i < lines.length; i++) {
-            const p = document.createElement('p');
-            p.className = lines[i].class;
-            container.appendChild(p);
-
-            const text = lines[i].text;
-            for (let char of text) {
-                p.textContent += char;
-                await new Promise(r => setTimeout(r, 40));
+            for (let i = 0; i < petalCount; i++) {
+                createPetal();
             }
-            await new Promise(r => setTimeout(r, 500));
-        }
-    }
-</script>
 
+            function createPetal() {
+                const petal = document.createElement('div');
+                petal.classList.add('petal');
+
+                // Propiedades aleatorias para naturalidad
+                const size = Math.random() * 15 + 10; // Tamaño entre 10px y 25px
+                const leftPosition = Math.random() * 100; // Posición horizontal (0% a 100%)
+                const fallDuration = Math.random() * 10 + 8; // Tiempo de caída (8s a 18s)
+                const fallDelay = Math.random() * 15; // Retraso de inicio (0s a 15s)
+                const swirlDuration = Math.random() * 4 + 3; // Velocidad de balanceo
+
+                // Variación sutil de color para mezclar pétalos de lirio (blanco/amarillo) y rosas
+                const isLily = Math.random() > 0.7; 
+                if (isLily) {
+                    petal.style.background = 'radial-gradient(circle at top left, #fff0f3, #ffe5ec)';
+                }
+
+                // Asignar estilos calculados
+                petal.style.width = `${size}px`;
+                petal.style.height = `${size}px`;
+                petal.style.left = `${leftPosition}vw`;
+                petal.style.animationDuration = `${fallDuration}s, ${swirlDuration}s`;
+                petal.style.animationDelay = `${fallDelay}s, ${fallDelay}s`;
+
+                petalsContainer.appendChild(petal);
+            }
+        });
+    </script>
 </body>
 </html>
