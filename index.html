@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Ti ❤️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #0b0914;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 30px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+        .garden {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            gap: 20px;
+            height: 220px;
+            margin-bottom: 25px;
+        }
+        .flower {
+            opacity: 0;
+            transform: scale(0.5) translateY(40px);
+            animation: growFlower 1.5s ease-out forwards;
+        }
+        .flower.lily { animation-delay: 0.3s; }
+        .flower.rose { animation-delay: 0.8s; }
+
+        @keyframes growFlower {
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .card-text {
+            min-height: 120px;
+            font-size: 1.15rem;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        .highlight-lily { color: #f472b6; font-weight: 600; }
+        .highlight-rose { color: #f87171; font-weight: 600; }
+        .highlight-final { color: #fbbf24; font-weight: bold; font-size: 1.25rem; display: block; margin-top: 15px; }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="garden">
+        <!-- SVG Lirio -->
+        <div class="flower lily">
+            <svg width="110" height="190" viewBox="0 0 100 160">
+                <path d="M50 160 Q 48 100 50 70" stroke="#4ade80" stroke-width="4" fill="none"/>
+                <path d="M50 110 Q 20 100 15 80 Q 35 80 50 100" fill="#22c55e"/>
+                <path d="M50 70 C 30 40 10 40 25 20 C 40 35 48 50 50 70 Z" fill="#ec4899"/>
+                <path d="M50 70 C 70 40 90 40 75 20 C 60 35 52 50 50 70 Z" fill="#f472b6"/>
+                <path d="M50 70 C 35 30 40 5 50 0 C 60 5 65 30 50 70 Z" fill="#fbcfe8"/>
+                <circle cx="50" cy="40" r="3" fill="#facc15"/>
+            </svg>
+        </div>
+
+        <!-- SVG Rosa -->
+        <div class="flower rose">
+            <svg width="110" height="190" viewBox="0 0 100 160">
+                <path d="M50 160 Q 52 100 50 65" stroke="#15803d" stroke-width="4" fill="none"/>
+                <path d="M50 120 Q 80 110 85 90 Q 65 90 50 110" fill="#16a34a"/>
+                <ellipse cx="50" cy="45" rx="28" ry="25" fill="#dc2626"/>
+                <path d="M35 35 C 35 15 65 15 65 35 C 55 50 45 50 35 35 Z" fill="#ef4444"/>
+                <path d="M42 30 C 42 20 58 20 58 30 Z" fill="#f87171"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="card-text" id="text-container"></div>
+</div>
+
+<footer>❤️ Hecho especialmente para ti</footer>
+
+<script>
+    const lines = [
+        { text: "Para ti, con todo mi cariño...", class: "" },
+        { text: "Un lirio por tu elegancia,", class: "highlight-lily" },
+        { text: "y una rosa por todo lo hermoso que compartimos.", class: "highlight-rose" },
+        { text: "¡Gracias por estar a mi lado!", class: "highlight-final" }
+    ];
+
+    const container = document.getElementById('text-container');
+
+    async function showMessage() {
+        await new Promise(r => setTimeout(r, 1600)); // Espera a que crezcan las flores
+        
+        for (let i = 0; i < lines.length; i++) {
+            const p = document.createElement('p');
+            if (lines[i].class) p.className = lines[i].class;
+            container.appendChild(p);
+
+            const text = lines[i].text;
+            for (let char of text) {
+                p.textContent += char;
+                await new Promise(r => setTimeout(r, 45));
+            }
+            await new Promise(r => setTimeout(r, 400));
+        }
+    }
+
+    showMessage();
+</script>
+
+</body>
+</html>
